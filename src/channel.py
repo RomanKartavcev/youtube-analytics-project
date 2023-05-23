@@ -1,4 +1,5 @@
 import json
+import os
 
 from helper.youtube_api_manual import youtube
 
@@ -51,3 +52,8 @@ class Channel:
         """Сохраняет в файл значения атрибутов экземпляра Channel."""
         with open(file_path, 'w') as file:
             json.dump(self.__dict__, file, ensure_ascii=False, indent=4)
+
+    def print_info(self) -> None:
+        """Выводит в консоль информацию о канале."""
+        channel = youtube.channels().list(id=self.channel_id, part='snippet,statistics').execute()
+        print(json.dumps(channel, indent=2, ensure_ascii=False))
